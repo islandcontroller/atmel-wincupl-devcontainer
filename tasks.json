@@ -1,0 +1,22 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "cupl",
+            "type": "process",
+            "command": "/usr/bin/cupl",
+            "args": [
+                "-m1xfjnabe", // Add 's' to this jumble of flags if you're using the simulator.
+                "${relativeFile}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

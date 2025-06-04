@@ -1,0 +1,3 @@
+#!/bin/sh
+
+wine $WINEPREFIX/drive_c/Wincupl/WinSim/winsim.exe $@

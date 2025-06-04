@@ -1,0 +1,3 @@
+#!/bin/sh
+
+wine $WINEPREFIX/drive_c/Wincupl/WinCupl/Wincupl.exe $@

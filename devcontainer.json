@@ -1,0 +1,21 @@
+{
+  "name": "Atmel WinCUPL",
+  
+  // Pull and use pre-built image from Docker Hub
+  "image": "islandc/atmel-wincupl-devcontainer",
+  
+  // Pre-configure settings and extensions
+  "customizations": {
+    "vscode": {
+      "settings": {        
+        "editor.insertSpaces": true,
+        "editor.rulers": [80],
+        "editor.tabSize": 2
+      },
+      "extensions": [
+        "keroc.hex-fmt",
+        "tlgkccampbell.code-cupl"
+      ]
+    }
+  }
+}
