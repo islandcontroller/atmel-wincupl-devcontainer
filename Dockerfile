@@ -34,25 +34,30 @@ ARG WINCUPL_URL="https://ww1.microchip.com/downloads/en/DeviceDoc/awincupl.exe.z
 ARG WINCUPL_HASH="45b4f911f7c73668dbef8650b6fa2ab0d106ff2b644640e92f12a7703fa52f51"
 
 # Add setup data
-COPY setup.iss setup.reg /tmp/
+COPY --chown=vscode setup.iss setup.reg /tmp/
 
 # Download and install
 RUN curl -sLO ${WINCUPL_URL} && \
-    unzip awincupl.exe.zip awincupl.exe && \
-    chmod +x awincupl.exe && \
+    echo "${WINCUPL_HASH} $(basename ${WINCUPL_URL})" | sha256sum -c - && \
+    unzip $(basename ${WINCUPL_URL}) awincupl.exe && \
     wine awincupl.exe /S && \
     before=$(stat -c '%Y' ${WINEPREFIX}/user.reg) && \
     wine regedit /tmp/setup.reg && \
     while [ $(stat -c '%Y' ${WINEPREFIX}/user.reg) = $before ]; do sleep 1; done && \
-    rm awincupl.exe.zip awincupl.exe
+    rm $(basename ${WINCUPL_URL}) awincupl.exe setup.reg setup.iss
 
 # Setup env vars
 ENV LIBCUPL="C:\\Wincupl\\Shared\\Atmel.dl"
 
-# Add redirecting scripts
-COPY cupl csim wincupl winsim /usr/bin/
+#- Redirection setup -----------------------------------------------------------
+USER root
+COPY wincupl /usr/bin/
+RUN ln -s /usr/bin/wincupl /usr/bin/cupl && \
+    ln -s /usr/bin/wincupl /usr/bin/csim && \
+    ln -s /usr/bin/wincupl /usr/bin/winsim
 
 #- User setup ------------------------------------------------------------------
 # Go back to workspaces dir
+USER vscode
 VOLUME [ "/workspaces" ]
 WORKDIR /workspaces

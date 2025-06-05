@@ -1,3 +1,10 @@
 #!/bin/sh
 
-wine $WINEPREFIX/drive_c/Wincupl/WinCupl/Wincupl.exe $@
+case $(basename $0) in
+    cupl)   target="Shared/cupl.exe"        ;;
+    csim)   target="Shared/csim.exe"        ;;
+    winsim) target="WinSim/winsim.exe"      ;;
+    *)      target="WinCupl/Wincupl.exe"    ;;
+esac
+
+wine $WINEPREFIX/drive_c/Wincupl/$target $@
