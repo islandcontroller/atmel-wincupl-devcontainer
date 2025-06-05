@@ -6,7 +6,7 @@
             "type": "process",
             "command": "/usr/bin/cupl",
             "args": [
-                "-m1xfjnabe",
+                "-m1xfjna",
                 "${relativeFile}"
             ],
             "options": {
